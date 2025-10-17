@@ -227,12 +227,19 @@ func main() {
     }
     fmt.Println(courseInfo)
 
-    // 方法二：使用索引初始化
-    courseInfo2 := [3][4]string{
+    // 方法二：使用键控元素初始化，非常灵活允许我们在初始化时指定行索引和/或列索引
+    courseInfo3 := [3][4]string{
         0: {"Go", "Golang", "Go语言", "Go 语言"},
+        1: {"Python", "Python3", "Python 3", "Python 3 语言"},
         2: {"Java", "JavaSE", "Java 标准 Edition", "Java 标准版"},
     }
-    fmt.Println(courseInfo2)
+    fmt.Println(courseInfo3)
+    // 方法四：逐个元素赋值
+    var courseInfo4 [3][4]string
+    courseInfo4[0][0] = "Go"
+    courseInfo4[0][1] = "Golang"
+    courseInfo4[0][2] = "Go语言"
+    courseInfo4[0][3] = "Go 语言"
 
     months := [...]string{1: "January", 12: "December"}
     fmt.Println(months)
@@ -247,8 +254,5 @@ func main() {
     symbol := [...]string{USD: "$", EUR: "€", GBP: "￡", RMB: "¥"}
     fmt.Println(RMB, symbol[RMB])
     // 切片
-    arr01 := [5]int{1, 2, 3, 4, 5}
-    fmt.Printf("arr01 的长度为：%d, 容量为：%d\n", len(arr01), cap(arr01))
-    sli01 := arr01[1:3]
-    fmt.Printf("sli01 的长度为：%d, 容量为：%d\n", len(sli01), cap(sli01))
+
 }
