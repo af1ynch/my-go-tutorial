@@ -199,12 +199,53 @@ func main() {
     }
 
     // 数组
-    myarr := [5]int{1, 2, 3, 4, 5}
-    fmt.Println(myarr)
 
-    myarr01 := [...]int{1, 2, 3, 4, 5}
-    fmt.Println(myarr01)
+    // 定义
+    // 一维数组：var name [size]type
+    var course1 [3]string
+    // 二维数组：var name [size][size]type
+    var courseInfo [3][4]string
 
+    // 初始化
+    // 一维数组
+    // 方法一：数组字面值语法初始化
+    course1 = [3]string{"Go", "Python", "Java"}
+    // 方法二：使用索引初始化
+    course2 := [3]string{2: "Java"}
+    // 方法三：使用 ... 初始化，...表示根据初始化值的数量自动推断数组的长度
+    course3 := [...]string{"Go", "Python", "Java"}
+    fmt.Println(course1)
+    fmt.Println(course2)
+    fmt.Println(course3)
+
+    // 多维数组
+    // 方法一：数组字面值语法初始化
+    courseInfo = [3][4]string{
+        {"Go", "Golang", "Go语言", "Go 语言"},
+        {"Python", "Python3", "Python 3", "Python 3 语言"},
+        {"Java", "JavaSE", "Java 标准 Edition", "Java 标准版"},
+    }
+    fmt.Println(courseInfo)
+
+    // 方法二：使用索引初始化
+    courseInfo2 := [3][4]string{
+        0: {"Go", "Golang", "Go语言", "Go 语言"},
+        2: {"Java", "JavaSE", "Java 标准 Edition", "Java 标准版"},
+    }
+    fmt.Println(courseInfo2)
+
+    months := [...]string{1: "January", 12: "December"}
+    fmt.Println(months)
+
+    type Currency int
+    const (
+        USD Currency = iota
+        EUR
+        GBP
+        RMB
+    )
+    symbol := [...]string{USD: "$", EUR: "€", GBP: "￡", RMB: "¥"}
+    fmt.Println(RMB, symbol[RMB])
     // 切片
     arr01 := [5]int{1, 2, 3, 4, 5}
     fmt.Printf("arr01 的长度为：%d, 容量为：%d\n", len(arr01), cap(arr01))
