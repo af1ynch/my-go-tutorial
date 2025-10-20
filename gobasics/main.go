@@ -3,6 +3,7 @@ package main
 import (
     "fmt"
     "time"
+    "unsafe"
 )
 
 // 定义同类型多全局变量
@@ -255,4 +256,112 @@ func main() {
     fmt.Println(RMB, symbol[RMB])
     // 切片
 
+    // 定义
+    // var name []type
+
+    // 初始化
+    // 方法一：字面值
+    slice2 := []int{1, 2, 3, 4, 5}
+    fmt.Println(slice2)
+
+    // 方法二：make
+    slice3 := make([]int, 3, 5)
+    fmt.Printf("%p, %v, len: %d, cap: %d\n", &slice3, slice3, len(slice3), cap(slice3))
+
+    // 方法三：从数组或切片直接创建
+    slice4 := course1[0:2]
+    fmt.Println(slice4, len(slice4), cap(slice4))
+
+    // 方法四：append
+    var slice5 []string
+    slice5 = append(slice5, "Go")
+    fmt.Println(slice5, len(slice5), cap(slice5))
+
+    // 常用操作
+
+    // 增加元素
+    // 场景一：增加单个元素
+    var course4 []string
+    course4 = append(course4, "Go")
+    fmt.Println(course4, len(course4), cap(course4))
+
+    // 场景二：增加多个元素
+    course4 = append(course4, "Python", "Java")
+    fmt.Println(course4, len(course4), cap(course4))
+
+    // 删除元素
+    // 元素删除，容量不变
+    course5 := []string{"Go", "Python", "Java", "grpc", "gin"}
+    fmt.Printf("%p\n", &course5)
+    fmt.Printf("course5当前底层数组的指针是：%v\n", getSliceBackingArrayPtr(course5))
+    getSliceMemAddress(course5)
+    course5 = append(course5[0:2], course5[3:]...)
+    fmt.Printf("%p\n", &course5)
+    fmt.Printf("course5删除元素后底层数组的指针是：%p\n", getSliceBackingArrayPtr(course5))
+    getSliceMemAddress(course5)
+    fmt.Println(course5, len(course5), cap(course5))
+    course5 = append(course5, "mysql")
+    fmt.Printf("%p\n", &course5)
+    fmt.Printf("course5添加元素后底层数组的指针是：%p\n", getSliceBackingArrayPtr(course5))
+    getSliceMemAddress(course5)
+    fmt.Println(course5, len(course5), cap(course5))
+
+    // 拷贝
+
+    // 浅拷贝：切片改动会影响到原切片
+    course6 := []string{"Golang", "Python", "C"}
+    fmt.Println(course6, len(course6), cap(course6))
+    fmt.Println()
+
+    course7 := course6[:]
+    fmt.Printf("%p\n", &course6)
+    fmt.Printf("%p\n", &course7)
+    fmt.Printf("%p\n", getSliceBackingArrayPtr(course6))
+    fmt.Printf("%p\n", getSliceBackingArrayPtr(course7))
+    fmt.Println(course6, len(course6), cap(course6))
+    fmt.Println(course7, len(course7), cap(course7))
+    course7[0] = "Java"
+    fmt.Printf("%p\n", &course6)
+    fmt.Printf("%p\n", &course7)
+    fmt.Printf("%p\n", getSliceBackingArrayPtr(course6))
+    fmt.Printf("%p\n", getSliceBackingArrayPtr(course7))
+    fmt.Println(course6, len(course6), cap(course6))
+    fmt.Println(course7, len(course7), cap(course7))
+    course7 = append(course7, "mysql")
+    fmt.Printf("%p\n", &course6)
+    fmt.Printf("%p\n", &course7)
+    fmt.Printf("%p\n", getSliceBackingArrayPtr(course6))
+    fmt.Printf("%p\n", getSliceBackingArrayPtr(course7))
+    fmt.Println(course6, len(course6), cap(course6))
+    fmt.Println(course7, len(course7), cap(course7))
+
+    // 深拷贝：切片改动不会影响到原切片
+    course8 := make([]string, len(course6), cap(course6))
+    copy(course8, course6)
+    fmt.Printf("%p\n", &course6)
+    fmt.Printf("%p\n", &course8)
+    fmt.Printf("%p\n", getSliceBackingArrayPtr(course6))
+    fmt.Printf("%p\n", getSliceBackingArrayPtr(course8))
+
+    // make
+    courses9 := make([]int, 2, 5)
+    courses10 := make([]string, 2, 5)
+    courses11 := make([]bool, 2, 5)
+    fmt.Println(courses9, len(courses9), cap(courses9))
+    fmt.Println(courses10, len(courses10), cap(courses10))
+    fmt.Println(courses11, len(courses11), cap(courses11))
+
+    // new
+    course12 := new([]string)
+    fmt.Println(course12, len(*course12), cap(*course12))
+}
+
+func getSliceMemAddress(c []string) {
+    for i := range c {
+        fmt.Printf("元素%v的内存地址是%p\n", c[i], &c[i])
+    }
+}
+
+func getSliceBackingArrayPtr(c []string) *string {
+    return unsafe.SliceData(c)
 }
