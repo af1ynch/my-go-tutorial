@@ -7,7 +7,8 @@ import (
 	"time"
 	"unsafe"
 
-	"github.com/af1ynch/my-go-tutorial/gobasics/oop"
+	"github.com/af1ynch/my-go-tutorial/gobasics/oop/gointerface"
+	"github.com/af1ynch/my-go-tutorial/gobasics/oop/gostruct"
 )
 
 // 定义同类型多全局变量
@@ -462,7 +463,7 @@ func main() {
 
 	// 结构体与方法
 
-	var user1 oop.User
+	var user1 gostruct.User
 
 	// 初始化
 
@@ -481,7 +482,7 @@ func main() {
 	// 使用字面量初始化
 
 	// 按字段顺序初始化，顺序必须一致
-	// user2 := oop.User{ "Bob", "bob@example.com", 25, oop.Address{"123 Main St", "Anytown", "CA", "12345"}, true}
+	// user2 := gostruct.User{ "Bob", "bob@example.com", 25, gostruct.Address{"123 Main St", "Anytown", "CA", "12345"}, true}
 
 	// 打印用户信息
 	// fmt.Printf("用户信息如下：%+v\n", user2)
@@ -489,11 +490,11 @@ func main() {
 	// 	user2.ID, user2.Name, user2.Email, user2.Age, user2.IsActive)
 
 	// 按字段名初始化，顺序可以不一致
-	user3 := oop.User{
+	user3 := gostruct.User{
 		Name:     "Bob",
 		Email:    "bob@example.com",
 		Age:      25,
-		Address:  oop.Address{"123 Main St", "Anytown", "CA", "12345"},
+		Address:  gostruct.Address{"123 Main St", "Anytown", "CA", "12345"},
 		IsActive: true,
 	}
 
@@ -503,7 +504,7 @@ func main() {
 		user3.ID, user3.Name, user3.Email, user3.Age, user3.Address.State+" "+user3.Address.City, user3.IsActive)
 
 	// 部分字段初始化，未初始化的字段将使用零值
-	user4 := oop.User{
+	user4 := gostruct.User{
 		Name:     "Charlie",
 		Email:    "charlie@example.com",
 		IsActive: false,
@@ -515,7 +516,7 @@ func main() {
 		user4.ID, user4.Name, user4.Email, user4.Age, user4.IsActive)
 
 	// 使用 new 函数
-	user5 := new(oop.User)
+	user5 := new(gostruct.User)
 	user5.Name = "David"
 	user5.Email = "david@example.com"
 	user5.Age = 28
@@ -527,27 +528,27 @@ func main() {
 		user5.ID, user5.Name, user5.Email, user5.Age, user5.IsActive)
 
 	// 使用构造函数初始化
-	user6 := oop.NewUser("Eve", "eve@example.com")
+	user6 := gostruct.NewUser("Eve", "eve@example.com")
 
 	// 打印用户信息
 	fmt.Printf("用户信息如下：%+v\n", *user6)
 	fmt.Printf("User ID: %d, Name: %s, Email: %s, Age: %d, IsActive: %v\n",
 		user6.ID, user6.Name, user6.Email, user6.Age, user6.IsActive)
 
-	acc := oop.NewAccount("123456", "Alice")
+	acc := gostruct.NewAccount("123456", "Alice")
 	fmt.Printf("acc的余额是%v\n", acc.GetBalance())
 
 	newBalance := acc.Deposit(100)
 	fmt.Printf("存款后返回的余额是：%.2f\n", newBalance)
 	fmt.Printf("存款后账户余额是：%.2f\n", acc.GetBalance())
 
-	doc1 := oop.CreateDocument("Go语言基础")
+	doc1 := gostruct.CreateDocument("Go语言基础")
 	doc1.AppendContent("Go语言是一种静态类型、编译型语言，由Google开发。")
 	fmt.Printf("文档标题是：%s\n", doc1.GetTitle())
 	fmt.Printf("文档大小是：%d\n", doc1.GetSize())
 
 	// 序列化为JSON
-	course13 := oop.Course{
+	course13 := gostruct.Course{
 		ID:          1001,
 		Title:       "Go语言基础",
 		Description: "介绍Go语言的基础语法、数据类型、控制流程等。",
@@ -565,14 +566,14 @@ func main() {
 	fmt.Printf("课程信息如下：\n%s\n，数据类型是%T\n", jsonData, jsonData)
 
 	// 接口
-	circle1 := &oop.Circle{Radius: 2}
-	oop.CaculateShapeInfo(circle1)
+	circle1 := &gointerface.Circle{Radius: 2}
+	gointerface.CaculateShapeInfo(circle1)
 
-	rectangle1 := &oop.Rectangle{
+	rectangle1 := &gointerface.Rectangle{
 		Height: 3,
 		Width:  2,
 	}
-	oop.CaculateShapeInfo(rectangle1)
+	gointerface.CaculateShapeInfo(rectangle1)
 }
 
 func getSliceMemAddress(c []string) {

@@ -1,4 +1,4 @@
-package oop
+package gostruct
 
 import (
 	"fmt"
